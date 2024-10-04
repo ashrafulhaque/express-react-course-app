@@ -2,9 +2,10 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
+  let user = undefined;
   return (
     <>
-      <div className="navbar bg-base-100">
+      <div className="navbar bg-base-100 border border-b-2">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -35,6 +36,7 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
+          <img src="./favicon.png" className="h-14" alt="Logo" />
           <Link to="/" className="btn btn-ghost text-xl">
             Course App
           </Link>
@@ -50,34 +52,51 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <NavLink to="/login" className="btn">
-            Login
-          </NavLink>
-        </div>
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+          {user !== null ? (
+            <div className="flex gap-2">
+              <NavLink
+                to="/signup"
+                className="btn btn-primary btn-outline min-h-9 h-9"
+              >
+                Register
+              </NavLink>
+              <NavLink
+                to="/login"
+                className="btn btn-primary btn-outline min-h-9 h-9"
+              >
+                Login
+              </NavLink>
             </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <Link to="/">Profile</Link>
-            </li>
-            <li>
-              <Link to="/logout">Logout</Link>
-            </li>
-          </ul>
+          ) : (
+            <div className="flex items-center">
+              <span className="text-pink-700 text-center">
+                Hello!<br></br>Md.Ashraful Haque
+              </span>
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="Tailwind CSS Navbar component"
+                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    />
+                  </div>
+                </div>
+
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                >
+                  <li className="py-2">
+                    <Link to="/logout">Logout</Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
