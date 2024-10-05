@@ -6,12 +6,23 @@ import { GoogleAuthProvider } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 
 const LoginPage = () => {
-  const { loginWithGoogle } = useContext(AuthContext);
+  const { loginWithGoogle, loginWithGithub } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
     console.log("Google login clicked");
     loginWithGoogle()
+      .then((result) => {
+        navigate("/products");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleGithubLogin = () => {
+    console.log("Github login clicked");
+    loginWithGithub()
       .then((result) => {
         navigate("/products");
       })
@@ -32,7 +43,12 @@ const LoginPage = () => {
       >
         Login With Google
       </button>
-      <button className="btn btn-warning w-full mb-3">Login With Github</button>
+      <button
+        onClick={handleGithubLogin}
+        className="btn btn-warning w-full mb-3"
+      >
+        Login With Github
+      </button>
       <p className="text-center bold">
         Don't have an account?{" "}
         <Link className="text-lime-600 underline" to="/signup">
