@@ -7,7 +7,7 @@ const MainLayout = () => {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto font-poppins">
+      <div className="font-poppins">
         <Outlet />
       </div>
       <Footer />
