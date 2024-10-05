@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../Firebase/Provider/AuthProvider";
 
 const Navbar = () => {
-  let user = undefined;
+  const { user, userLogout } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    userLogout();
+  };
+
   return (
     <>
       <div className="navbar bg-base-100 border border-b-2">
@@ -36,13 +42,13 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <img src="./favicon.png" className="h-14" alt="Logo" />
+          <img src="./logo.png" className="w-14" alt="Logo" />
           <Link to="/" className="btn btn-ghost text-xl">
             Course App
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal px-1 text-[15px]">
             <li>
               <NavLink to="/">Home</NavLink>
             </li>
@@ -52,7 +58,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          {user !== null ? (
+          {!user ? (
             <div className="flex gap-2">
               <NavLink
                 to="/signup"
@@ -69,8 +75,9 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex items-center">
-              <span className="text-pink-700 text-center">
-                Hello!<br></br>Md.Ashraful Haque
+              <span className="text-pink-800 text-center font-semibold text-sm">
+                Hello!<br></br>
+                {user?.displayName}
               </span>
               <div className="dropdown dropdown-end">
                 <div
@@ -81,7 +88,7 @@ const Navbar = () => {
                   <div className="w-10 rounded-full">
                     <img
                       alt="Tailwind CSS Navbar component"
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                      src={user?.photoURL}
                     />
                   </div>
                 </div>
@@ -91,7 +98,7 @@ const Navbar = () => {
                   className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
                 >
                   <li className="py-2">
-                    <Link to="/logout">Logout</Link>
+                    <Link onClick={handleLogout}>Logout</Link>
                   </li>
                 </ul>
               </div>
