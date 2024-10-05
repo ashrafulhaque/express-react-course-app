@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Firebase/Provider/AuthProvider";
 
 const Navbar = () => {
   const { user, userLogout } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const handleLogout = () => {
     userLogout();
+    navigate("/login");
   };
 
   return (
@@ -86,10 +87,7 @@ const Navbar = () => {
                   className="btn btn-ghost btn-circle avatar"
                 >
                   <div className="w-10 rounded-full">
-                    <img
-                      alt="Tailwind CSS Navbar component"
-                      src={user?.photoURL}
-                    />
+                    <img alt="Profile Image" src={user?.photoURL} />
                   </div>
                 </div>
 
