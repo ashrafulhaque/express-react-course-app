@@ -54,17 +54,18 @@ const Footer = () => {
         <div>
           <h6 className="footer-title">Contact</h6>
           <p>
-            <i className="fa-solid fa-globe"></i> www.expresscourseapp.com
-          </p>
-          <p>
-            <i className="fa-solid fa-envelope"></i> Email:
-            contact@expresscourseapp.com
-          </p>
-          <p>
             <i className="fa-solid fa-phone"></i> Phone: 555-555-5555
           </p>
           <p>
-            <i className="fa-solid fa-mobile-screen"></i> +880 1712-345678
+            <i className="fa-solid fa-mobile-screen"></i> Mobile: +880
+            1712-345678
+          </p>
+          <p>
+            <i className="fa-solid fa-globe"></i> www.expresscourseapp.com
+          </p>
+          <p>
+            <i className="fa-solid fa-envelope"></i>{" "}
+            contact@expresscourseapp.com
           </p>
         </div>
       </footer>
