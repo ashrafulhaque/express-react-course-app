@@ -3,6 +3,7 @@ import Banner from "../components/Banner";
 import Howitworks from "../components/Howitworks";
 import ImageSection from "../components/ImageSection";
 import ContactUs from "../components/ContactUs";
+import AboutUs from "../components/AboutUs";
 
 const HomePage = () => {
   return (
@@ -11,6 +12,7 @@ const HomePage = () => {
       <Howitworks />
       <ImageSection />
       <ContactUs />
+      <AboutUs />
     </div>
   );
 };
