@@ -2,7 +2,7 @@ import React from "react";
 
 const Howitworks = () => {
   return (
-    <div>
+    <>
       <section className="bg-neutral-200 pb-10">
         <h2 className="font-play text-5xl pt-8 pb-6 text-center font-bold">
           How It <span className="text-blue-800">Works</span>
@@ -72,7 +72,7 @@ const Howitworks = () => {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };
 
