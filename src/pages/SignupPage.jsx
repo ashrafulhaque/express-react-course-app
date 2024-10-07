@@ -49,6 +49,7 @@ const SignupPage = () => {
             type="text"
             className="grow"
             placeholder="Name"
+            required
           />
         </label>
         <label className="input input-bordered flex items-center gap-2">
@@ -66,6 +67,7 @@ const SignupPage = () => {
             type="text"
             className="grow"
             placeholder="Email"
+            required
           />
         </label>
 
@@ -88,6 +90,7 @@ const SignupPage = () => {
             id="password"
             className="grow"
             placeholder="Password"
+            required
           />
         </label>
         <label className="input input-bordered flex items-center gap-2">
@@ -109,6 +112,7 @@ const SignupPage = () => {
             id="photoURL"
             className="grow"
             placeholder="https://example.com/profile-photo.jpg"
+            required
           />
         </label>
         <button type="submit" className="btn btn-neutral w-full mt-4">

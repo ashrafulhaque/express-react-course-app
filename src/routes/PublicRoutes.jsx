@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import SignupPage from "../pages/SignupPage";
 import ProductsPage from "../pages/ProductsPage";
+import ProductDetails from "../pages/ProductDetails";
 import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        index: "/",
+        index: true, // True for the home page at "/"
         element: <HomePage />,
       },
       {
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoutes>
         <ProductsPage />
+      </PrivateRoutes>
+    ),
+  },
+  {
+    path: "/products/:id", // Dynamic route for product details
+    element: (
+      <PrivateRoutes>
+        <ProductDetails />
       </PrivateRoutes>
     ),
   },

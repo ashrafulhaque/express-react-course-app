@@ -30,7 +30,7 @@ const Howitworks = () => {
               </div>
             </div>
           </div>
-          <div class="card bg-base-100 shadow-xl rounded-none py-10">
+          <div class="card bg-base-100 shadow-xl rounded-none py-5">
             <div class="card-body">
               <p className="text-gray-400 font-semibold">Step 2</p>
               <h2 class="card-title text-info">Login</h2>

@@ -43,9 +43,10 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <img src="./logo.png" className="w-14" alt="Logo" />
+
           <Link to="/" className="btn btn-ghost text-xl font-courgette">
-            Course App
+            <img src="/logo.png" className="w-14 font-sans" alt="Logo" />
+            <span className="hidden md:block">Course App</span>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">

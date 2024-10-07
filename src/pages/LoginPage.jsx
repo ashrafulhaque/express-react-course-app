@@ -87,6 +87,7 @@ const LoginPage = () => {
             type="text"
             className="grow"
             placeholder="Email"
+            required
           />
         </label>
 
@@ -109,6 +110,7 @@ const LoginPage = () => {
             id="password"
             className="grow"
             placeholder="Password"
+            required
           />
         </label>
 
