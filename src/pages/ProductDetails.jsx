@@ -39,7 +39,6 @@ const ProductDetails = () => {
   if (!course) {
     return <p>No course found.</p>;
   }
-
   return (
     <>
       <Navbar />

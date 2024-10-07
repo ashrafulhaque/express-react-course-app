@@ -24,10 +24,18 @@ const CourseCard = ({ course }) => {
           </div>
         )}
         <h3 className="text-lg font-bold mb-2">{course.title}</h3>
-        <p className="text-gray-600 mb-4">Author: {course.author}</p>
+        <div className="flex justify-between items-center">
+          <p className="text-gray-600">Author: {course.author}</p>
+          <p className="text-orange-500 text-sm font-semibold">
+            Price: {course.price}
+          </p>
+        </div>
+
         <div className="flex justify-between items-center">
           <p className="text-gray-600">Duration: {course.duration}</p>
-          <p className="text-yellow-500 font-bold">{course.ratings}</p>
+          <p className="text-yellow-500 text-sm font-semibold">
+            {course.ratings}
+          </p>
         </div>
         <Link
           to={`/products/${course._id}`} // Dynamic route to product details
