@@ -21,9 +21,9 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // Keep track of loading state
 
-  const gooleProvider = new GoogleAuthProvider();
+  const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
 
   const createUser = async (displayName, email, password, photoURL) => {
@@ -31,7 +31,6 @@ const AuthProvider = ({ children }) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       // After the user is created, update the profile with displayName and photoURL
-      console.log("updating profile...", displayName, photoURL);
       await updateProfile(auth.currentUser, {
         displayName: displayName,
         photoURL: photoURL,
@@ -40,27 +39,45 @@ const AuthProvider = ({ children }) => {
       await auth.currentUser.reload();
       // Update the user state with the new information
       setUser(auth.currentUser);
+    } catch (error) {
+      console.error("Error creating user:", error);
+    } finally {
       setLoading(false);
-    } catch (error) {}
+    }
   };
 
   const loginWithEmail = async (email, password) => {
     setLoading(true);
-    await signInWithEmailAndPassword(auth, email, password);
-    // Update the user state with the new information
-    setUser(auth.currentUser);
-    console.log("photoURL: ", auth.currentUser.photoURL);
-    setLoading(false);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setUser(auth.currentUser);
+    } catch (error) {
+      console.error("Error logging in with email:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const loginWithGoogle = () => {
     setLoading(true);
-    return signInWithPopup(auth, gooleProvider);
+    return signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const loginWithGithub = () => {
     setLoading(true);
-    return signInWithPopup(auth, githubProvider);
+    return signInWithPopup(auth, githubProvider)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const userLogout = async () => {
@@ -68,31 +85,25 @@ const AuthProvider = ({ children }) => {
     try {
       await signOut(auth);
       setUser(null);
-      console.log("Sign-out successful!", user);
-    } catch {
-      console.log("An error happened during signout");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
   useEffect(() => {
-    // Set the persistence to browser local storage
     setPersistence(auth, browserLocalPersistence)
       .then(() => {
-        // Once persistence is set, listen for auth state changes
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-          if (currentUser) {
-            setUser(currentUser);
-            console.log("User is signed in.", currentUser);
-          } else {
-            setUser(null); // Handle case when no user is logged in
-          }
-          setLoading(false); // Stop loading regardless of user state
+          setUser(currentUser);
+          setLoading(false);
         });
-
-        return () => unsubscribe(); // Unsubscribe on unmount
+        return () => unsubscribe();
       })
       .catch((error) => {
-        console.error("Error setting auth persistence:", error);
-        setLoading(false); // Ensure loading state is stopped even on error
+        console.error("Error setting persistence:", error);
+        setLoading(false);
       });
   }, []);
 
@@ -103,12 +114,11 @@ const AuthProvider = ({ children }) => {
     loginWithGithub,
     user,
     userLogout,
+    loading, // Pass loading state to the context
   };
 
   return (
-    <>
-      <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
-    </>
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 };
 
