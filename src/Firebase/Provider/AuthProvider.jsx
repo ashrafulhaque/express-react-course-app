@@ -4,6 +4,8 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   onAuthStateChanged,
+  setPersistence,
+  browserLocalPersistence,
   signInWithPopup,
   signOut,
   createUserWithEmailAndPassword,
@@ -72,15 +74,26 @@ const AuthProvider = ({ children }) => {
     }
   };
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        console.log("User is signed in.", currentUser);
-        setLoading(false);
-      }
-    });
+    // Set the persistence to browser local storage
+    setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+        // Once persistence is set, listen for auth state changes
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+          if (currentUser) {
+            setUser(currentUser);
+            console.log("User is signed in.", currentUser);
+          } else {
+            setUser(null); // Handle case when no user is logged in
+          }
+          setLoading(false); // Stop loading regardless of user state
+        });
 
-    return () => unsubscribe(); // unsubscribe on unmount to avoid memory leaks
+        return () => unsubscribe(); // Unsubscribe on unmount
+      })
+      .catch((error) => {
+        console.error("Error setting auth persistence:", error);
+        setLoading(false); // Ensure loading state is stopped even on error
+      });
   }, []);
 
   const authInfo = {

@@ -1,15 +1,19 @@
 import { AuthContext } from "../Firebase/Provider/AuthProvider";
 import React, { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 const PrivateRoutes = ({ children }) => {
   const { user } = useContext(AuthContext);
+  const location = useLocation(); // Use location to capture the current URL
 
   if (user) {
     return children; // If the user is authenticated, render the children components
   }
 
-  return <Navigate to="/login" replace />; // Redirect to the login page if user is not authenticated
+  // Pass the current location as the redirect path when navigating to login
+  return (
+    <Navigate to="/login" replace state={{ redirectPath: location.pathname }} />
+  );
 };
 
 export default PrivateRoutes;
